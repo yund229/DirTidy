@@ -94,6 +94,40 @@ dirtidy ~/Downloads --rules myrules.json
 
 监控采用目录轮询（默认 3 秒），不依赖平台特定的文件系统事件 API，所以在三大平台上行为完全一致，测试也更可靠。
 
+## 整理前 vs 整理后
+
+```
+Downloads/                        Downloads/
+├── holiday.jpg                   ├── Images/
+├── report.pdf                    │   └── holiday.jpg
+├── backup.zip                    ├── Documents/
+├── setup.exe          -->        │   └── report.pdf
+├── clip.mp4                      ├── Archives/
+├── song.flac                     │   └── backup.zip
+├── notes.xyz                     ├── Installers/
+└── 毕业设计-最终版.docx            │   └── setup.exe
+                                  ├── Videos/
+                                  │   └── clip.mp4
+                                  ├── Audio/
+                                  │   └── song.flac
+                                  ├── notes.xyz          (没匹配规则,留在原地)
+                                  └── 毕业设计-最终版.docx
+```
+
+## FAQ
+
+**会不会把我的文件弄乱 / 误删?**
+不会删任何文件,只做"移动"。没匹配到规则的文件留在原地;隐藏文件和日志永远跳过;重名自动改成 `文件 (1).jpg` 而不是覆盖。所有移动都有日志,随时 `--undo` 回滚。
+
+**正在下载还没完成的文件会不会被移动?**
+有这个可能(文件后缀已经出现但下载未完成)。建议先用 `--dry-run` 观察几轮,或等下载完成后手动触发一次。后续版本计划加入"文件静默期"检查(刚写入且仍在增长的文件先跳过)。
+
+**监控会不会很吃资源?**
+不会。轮询只是每 3 秒读一次目录的文件名和 mtime,单次开销在毫秒级,常驻内存约 10 MB。
+
+**怎么让某一类文件不被移动?**
+用 `--rules` 自定义规则,把不要的分类删掉即可(规则文件完全取代默认规则)。
+
 ## 项目结构
 
 ```
@@ -103,9 +137,13 @@ dirtidy/
 ├── watcher.py   # 轮询监控
 ├── cli.py       # 命令行入口
 └── __main__.py
-tests/           # 65 个单元测试
+tests/           # 66 个单元测试
 ```
 
 ## License
 
 [MIT](LICENSE)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yund229/DirTidy&type=Date)](https://star-history.com/#yund229/DirTidy&Date)

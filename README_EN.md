@@ -20,7 +20,7 @@ Keep your Downloads folder clean automatically. DirTidy watches a folder, sorts 
 - **One-command undo** — every pass is journaled to JSONL; `--undo` reverts the last batch, `--undo-all` reverts everything
 - **No overwrites** — name conflicts are resolved as `file (1).jpg`
 - **Cross-platform** — identical behavior on Windows / macOS / Linux, plus a portable Windows exe
-- **65 unit tests** — CI matrix across Python 3.9 / 3.11 / 3.13 × Ubuntu / Windows
+- **66 unit tests** — CI matrix across Python 3.9 / 3.11 / 3.13 × Ubuntu / Windows
 
 ## Installation
 
@@ -73,6 +73,44 @@ A `--rules` file **replaces** the defaults entirely (it is not merged), so start
 
 The watcher polls the directory (default every 3 s) instead of using platform-specific filesystem event APIs, so behavior is identical on all three OSes and easy to test.
 
+## Before vs After
+
+```
+Downloads/                        Downloads/
+├── holiday.jpg                   ├── Images/
+├── report.pdf                    │   └── holiday.jpg
+├── backup.zip                    ├── Documents/
+├── setup.exe          -->        │   └── report.pdf
+├── clip.mp4                      ├── Archives/
+├── song.flac                     │   └── backup.zip
+├── notes.xyz                     ├── Installers/
+└── thesis-final.docx             │   └── setup.exe
+                                  ├── Videos/
+                                  │   └── clip.mp4
+                                  ├── Audio/
+                                  │   └── song.flac
+                                  ├── notes.xyz        (no rule match: stays put)
+                                  └── thesis-final.docx
+```
+
+## FAQ
+
+**Will it mess up or delete my files?**
+Nothing is ever deleted, only moved. Files matching no rule stay in place; dotfiles and the journal are always skipped; name conflicts become `file (1).jpg` instead of overwriting. Every move is journaled and can be reverted with `--undo`.
+
+**Will it move files that are still downloading?**
+Possibly (the final extension may already exist while the download is in progress). Try `--dry-run` first, or trigger a manual pass after downloads finish. A "quiet period" check (skip files that are still growing) is planned.
+
+**Is the watcher resource-heavy?**
+No. Polling reads names and mtimes once every 3 s — milliseconds per cycle, ~10 MB resident memory.
+
+**How do I exclude a category?**
+Use `--rules` with a JSON file that omits it (a rules file fully replaces the defaults).
+
 ## License
 
 [MIT](LICENSE)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yund229/DirTidy&type=Date)](https://star-history.com/#yund229/DirTidy&Date)
