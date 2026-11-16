@@ -149,3 +149,9 @@ tests/           # 66 个单元测试
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=yund229/DirTidy&type=Date)](https://star-history.com/#yund229/DirTidy&Date)
+
+## 更多自研小工具
+
+- [SnapOCR](https://github.com/yund229/SnapOCR) — 截图 OCR 取字,离线识别
+- [RectGif](https://github.com/yund229/RectGif) — 框选屏幕任意区域直接录 GIF
+- [DeskPet](https://github.com/yund229/DeskPet) — Java 桌面宠物
