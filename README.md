@@ -4,6 +4,8 @@
 
 **让下载文件夹自己变干净。** 监控指定文件夹，按扩展名自动把文件归类到子文件夹，随时一键撤销。
 
+> 📝 [图文教程：从零实现一个下载文件夹自动整理器（CSDN）](https://blog.csdn.net/w_2345678/article/details/170816591)
+
 [![CI](https://github.com/yund229/DirTidy/actions/workflows/ci.yml/badge.svg)](https://github.com/yund229/DirTidy/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
