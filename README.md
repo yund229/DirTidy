@@ -142,6 +142,7 @@ dirtidy/
 tests/           # 66 个单元测试
 ```
 
+- [VocabPill](https://github.com/yund229/VocabPill) - pop-up flashcards for CET-4/CET-6 words, Leitner spaced repetition, zero dependencies
 ## License
 
 [MIT](LICENSE)
